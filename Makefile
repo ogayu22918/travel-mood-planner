@@ -19,16 +19,16 @@ setup:
 	@make up
 
 build:
-	docker-compose build
+	docker compose build
 
 up:
-	docker-compose up -d
+	docker compose up -d
 	@echo "サービスが起動するまで待機中..."
 	@sleep 10
 	@echo "データベースマイグレーションを実行中..."
-	@docker-compose exec backend alembic upgrade head || echo "マイグレーションをスキップ"
+	@docker compose exec backend alembic upgrade head || echo "マイグレーションをスキップ"
 	@echo "初期データを投入中..."
-	@docker-compose exec backend python scripts/seed_data.py || echo "シードデータ投入をスキップ"
+	@docker compose exec backend python scripts/seed_data.py || echo "シードデータ投入をスキップ"
 	@echo ""
 	@echo "✅ すべてのサービスが起動しました！"
 	@echo ""
@@ -38,19 +38,19 @@ up:
 	@echo "停止するには: make down"
 
 down:
-	docker-compose down
+	docker compose down
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 shell:
-	docker-compose exec backend bash
+	docker compose exec backend bash
 
 test:
-	docker-compose exec backend pytest
+	docker compose exec backend pytest
 
 clean:
-	docker-compose down -v
+	docker compose down -v
 	rm -rf backend/__pycache__
 	rm -rf frontend/.next
 	rm -rf frontend/node_modules
